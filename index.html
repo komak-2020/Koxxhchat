@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOXXH Chat</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .box {
+            width: 610px;
+            height: 450px;
+            border: 5px solid rgb(255, 0, 0);
+            padding: 20px;
+            margin-left: 400px;
+            text-align: center;
+            background-color: #333;
+            overflow-y: auto;
+            color: #fff;
+        }
+        .message {
+            background-color: rgb(0, 0, 0);
+            color: rgb(255, 0, 0);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .message span {
+            font-weight: bold;
+        }
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 20px;
+            margin: 5px;
+            border: 2px solid #000000;
+            width: 400px;
+        }
+        input[type="submit"] {
+            background-color: #00b20f;
+            color: rgb(53, 53, 53);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="color: red; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 100px; margin-top: 0px; margin-left: 610px;">Koxxh</h1>
+
+    <div class="box" id="chatBox"></div>
+    <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Message for KoXxh" style="color: black;background-color: #333; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+        <input type="submit" value="Send" id="sendMessage">
+    </div>
+    
+    <script>
+        const chatBox = document.getElementById('chatBox');
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageButton = document.getElementById('sendMessage');
+        const getStoredUserName = () => localStorage.getItem('username');
+        
+        const startChat = () => {
+            let username = getStoredUserName();
+            if (!username) {
+                username = prompt("Please enter your username:"); 
+                if (username) {
+                    localStorage.setItem('username', username); 
+                } else {
+                    alert('Username is required!');
+                    return;
+                }
+            }
+        };
+
+
+        sendMessageButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message !== '') {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.innerHTML = `<span>${getStoredUserName()}: </span>${message}`;
+                chatBox.appendChild(messageDiv);
+                messageInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight; 
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessageButton.click(); 
+            }
+        });
+
+        window.addEventListener('load', () => {
+            startChat(); 
+        });
+    </script>
+
+    <footer style="text-align: center; color: white; font-size: 14px; margin-top: 20px;">
+        <p>&copy; 2025 Koxxh. All Rights Reserved.</p>
+        <p>Made with ❤️ by Koxxh</p>
+    </footer>
+
+</body>
+</html>
