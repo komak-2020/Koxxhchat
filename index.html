@@ -75,7 +75,7 @@
         const sendMessageButton = document.getElementById('sendMessage');
         const getStoredUserName = () => localStorage.getItem('username');
         
-        let messages = [];  // آرایه‌ای برای ذخیره پیام‌ها
+        let messages = [];   
         
         const startChat = () => {
             let username = getStoredUserName();
@@ -91,23 +91,23 @@
         };
 
         const displayMessages = () => {
-            chatBox.innerHTML = '';  // پاک کردن محتویات چت باکس
+            chatBox.innerHTML = '';  
             messages.forEach(message => {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message');
                 messageDiv.innerHTML = `<span>${message.username}: </span>${message.text}`;
                 chatBox.appendChild(messageDiv);
             });
-            chatBox.scrollTop = chatBox.scrollHeight;  // اسکرول خودکار به پایین
+            chatBox.scrollTop = chatBox.scrollHeight;  
         };
 
         sendMessageButton.addEventListener('click', () => {
             const messageText = messageInput.value.trim();
             if (messageText !== '') {
                 const newMessage = { username: getStoredUserName(), text: messageText };
-                messages.push(newMessage);  // اضافه کردن پیام جدید به آرایه
+                messages.push(newMessage);  
                 messageInput.value = '';
-                displayMessages();  // نمایش مجدد پیام‌ها
+                displayMessages();  
             }
         });
 
@@ -119,7 +119,7 @@
 
         window.addEventListener('load', () => {
             startChat(); 
-            displayMessages();  // نمایش پیام‌های ذخیره شده
+            displayMessages();  
         });
     </script>
 
