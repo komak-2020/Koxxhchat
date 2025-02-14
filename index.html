@@ -75,6 +75,8 @@
         const sendMessageButton = document.getElementById('sendMessage');
         const getStoredUserName = () => localStorage.getItem('username');
         
+        let messages = [];  // آرایه‌ای برای ذخیره پیام‌ها
+        
         const startChat = () => {
             let username = getStoredUserName();
             if (!username) {
@@ -88,16 +90,24 @@
             }
         };
 
-
-        sendMessageButton.addEventListener('click', () => {
-            const message = messageInput.value.trim();
-            if (message !== '') {
+        const displayMessages = () => {
+            chatBox.innerHTML = '';  // پاک کردن محتویات چت باکس
+            messages.forEach(message => {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message');
-                messageDiv.innerHTML = `<span>${getStoredUserName()}: </span>${message}`;
+                messageDiv.innerHTML = `<span>${message.username}: </span>${message.text}`;
                 chatBox.appendChild(messageDiv);
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;  // اسکرول خودکار به پایین
+        };
+
+        sendMessageButton.addEventListener('click', () => {
+            const messageText = messageInput.value.trim();
+            if (messageText !== '') {
+                const newMessage = { username: getStoredUserName(), text: messageText };
+                messages.push(newMessage);  // اضافه کردن پیام جدید به آرایه
                 messageInput.value = '';
-                chatBox.scrollTop = chatBox.scrollHeight; 
+                displayMessages();  // نمایش مجدد پیام‌ها
             }
         });
 
@@ -109,6 +119,7 @@
 
         window.addEventListener('load', () => {
             startChat(); 
+            displayMessages();  // نمایش پیام‌های ذخیره شده
         });
     </script>
 
