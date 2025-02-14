@@ -6,22 +6,22 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// مسیری که فایل‌های استاتیک رو در اون می‌ذاریم
+
 app.use(express.static('public'));
 
-// وقتی یک کاربر به سرور وصل میشه
+
 io.on('connection', (socket) => {
     console.log('یک کاربر وصل شد');
 
-    // وقتی پیام جدید دریافت میشه
+
     socket.on('chat message', (msg) => {
         console.log('پیام جدید: ' + msg);
-        io.emit('chat message', msg);  // ارسال پیام به همه کاربران متصل
+        io.emit('chat message', msg);  
     });
 
-    // وقتی کاربر از سرور جدا میشه
+
     socket.on('disconnect', () => {
-        console.log('یک کاربر از سرور جدا شد');
+        console.log(':(');
     });
 });
 
